@@ -88,7 +88,7 @@ export default function FormForGuest({ onSubmit }) {
           />
         </label>
 
-        <button type="submit">Запостить отзыв!</button>
+        <button type="submit">Post your feedback!</button>
       </form>
       {guests.length > 0 && (
         <>
