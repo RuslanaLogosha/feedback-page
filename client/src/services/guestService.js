@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://feedback-page.herokuapp.com/guests/';
+axios.defaults.baseURL = 'https://feedback-page.herokuapp.com/guests/';
 
 async function fetchGuests() {
   try {
@@ -16,7 +16,7 @@ async function createGuest(body) {
   try {
     const ratings = await axios({
       method: 'post',
-      url: 'http://feedback-page.herokuapp.com/guests/',
+      url: 'https://feedback-page.herokuapp.com/guests/',
       data: {
         name,
         feedback,
