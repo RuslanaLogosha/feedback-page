@@ -3,7 +3,7 @@ import shortid from 'shortid';
 
 import api from '../services/guestService';
 
-export default function FormForGuest({ onSubmit }) {
+export default function FormForGuest() {
   const [name, setName] = useState('');
   const [feedback, setFeedback] = useState('');
   const [guests, setGuests] = useState([]);
@@ -15,6 +15,7 @@ export default function FormForGuest({ onSubmit }) {
         .then(response => {
           setGuests([...response.data]);
         })
+        .then(console.log(Date.now()))
         .catch(error => {
           console.log(error);
         });
@@ -24,10 +25,20 @@ export default function FormForGuest({ onSubmit }) {
   }, []);
 
   async function createGuest() {
+    if (name === '') {
+      alert('Please, write your name');
+      return;
+    }
+    if (feedback === '') {
+      alert('Please, write your feedback');
+      return;
+    }
+
     const id = shortid.generate();
     api
       .createGuest({ name, feedback, id })
       .then()
+      .then(console.log('create'))
       .catch(error => {
         console.log(error);
       });
@@ -39,13 +50,22 @@ export default function FormForGuest({ onSubmit }) {
       .then(response => {
         setGuests([...response.data]);
       })
+      .then(console.log('render'))
       .catch(error => {
         console.log(error);
       });
   }
 
+  async function createAndRenderGuest() {
+    await createGuest();
+    setTimeout(() => {
+      renderGuests();
+    }, 1000);
+  }
+
   const handleChange = e => {
     const { name, value } = e.currentTarget;
+
     switch (name) {
       case 'name':
         setName(value);
@@ -60,8 +80,7 @@ export default function FormForGuest({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    createGuest();
-    renderGuests();
+    createAndRenderGuest();
     reset();
   };
 
