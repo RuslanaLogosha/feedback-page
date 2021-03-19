@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import shortid from 'shortid';
-
+import { Title } from './Title';
+import { Form } from './FormMUI';
+import { Input } from './InputMUI';
+import { ButtonMUI } from './ButtonMUI';
 import api from '../services/guestService';
+import s from './styles.module.css';
 
 export default function FormForGuest() {
   const [name, setName] = useState('');
@@ -90,16 +94,16 @@ export default function FormForGuest() {
   };
 
   return (
-    <>
-      <h1>Form for feedback</h1>
-      <form onSubmit={handleSubmit}>
+    <div className={s.container}>
+      <Form onSubmit={handleSubmit}>
+        <Title>Form for feedback</Title>
         <label>
           Name
-          <input type="text" name="name" value={name} onChange={handleChange} />
+          <Input type="text" name="name" value={name} onChange={handleChange} />
         </label>
         <label>
           Feedback
-          <input
+          <Input
             type="text"
             name="feedback"
             value={feedback}
@@ -107,11 +111,15 @@ export default function FormForGuest() {
           />
         </label>
 
-        <button type="submit">Post your feedback!</button>
-      </form>
-      {guests.length > 0 && (
-        <>
-          <h1>Look at the feedbacks we already have</h1>
+        <ButtonMUI type="submit">Post your feedback!</ButtonMUI>
+      </Form>
+      <div className={s.feedback}>
+        {guests.length > 0 ? (
+          <Title>Look at the feedbacks we already have</Title>
+        ) : (
+          <Title>Please, leave your feeback here</Title>
+        )}
+        {guests.length > 0 && (
           <ul>
             {guests.map(({ name, feedback, id }) => (
               <li key={id}>
@@ -120,8 +128,8 @@ export default function FormForGuest() {
               </li>
             ))}
           </ul>
-        </>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 }
