@@ -6,8 +6,9 @@ const getAllGuests = async () => {
 };
 
 const createGuest = async body => {
-  const result = await Guest.create(body);
-  return result;
+  await Guest.create(body);
+  const results = await Guest.find({});
+  return results;
 };
 
 module.exports = {

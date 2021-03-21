@@ -17,7 +17,7 @@ export default function FormForGuest() {
       api
         .fetchGuests()
         .then(response => {
-          setGuests([...response.data]);
+          setGuests(response.data);
         })
         .then(console.log(Date.now()))
         .catch(error => {
@@ -41,30 +41,12 @@ export default function FormForGuest() {
     const id = shortid.generate();
     api
       .createGuest({ name, feedback, id })
-      .then()
-      .then(console.log('create'))
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  async function renderGuests() {
-    api
-      .fetchGuests()
       .then(response => {
         setGuests([...response.data]);
       })
-      .then(console.log('render'))
       .catch(error => {
         console.log(error);
       });
-  }
-
-  async function createAndRenderGuest() {
-    await createGuest();
-    setTimeout(() => {
-      renderGuests();
-    }, 1000);
   }
 
   const handleChange = e => {
@@ -84,7 +66,7 @@ export default function FormForGuest() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    createAndRenderGuest();
+    createGuest();
     reset();
   };
 

@@ -8,7 +8,7 @@ const userSchema = new Schema(
       required: [true, 'Добавьте имя гостя'],
       unique: false,
       minlength: 2,
-      maxlength: 15,
+      maxlength: 25,
     },
     feedback: {
       type: String,
